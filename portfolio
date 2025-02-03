@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+    <title>Tenzin Choedhen</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css" />
+    <link rel="stylesheet" href="assets/css/templatemo-style.css" />
+    <link rel="stylesheet" href="assets/css/owl.css" />
+    <link rel="stylesheet" href="assets/css/lightbox.css" />
+  </head>
+
+  <body>
+    <div id="page-wraper">
+      <!-- Sidebar Menu -->
+      <div class="responsive-nav">
+        <i class="fa fa-bars" id="menu-toggle"></i>
+        <div id="menu" class="menu">
+          <i class="fa fa-times" id="menu-close"></i>
+          <div class="container">
+            <div class="image">
+              <img src="assets/images/author-image.png" alt="" />
+            </div>
+            <div class="author-content">
+              <h4>Tenzin Choedhen</h4>
+              <span>
+                <i class="fas fa-map-marker-alt"></i>
+                New Haven, CT
+              </span>
+            </div>
+            <nav class="main-nav" role="navigation">
+              <ul class="main-menu">
+                <li><a href="#section1">About Me</a></li>
+                <li><a href="#section2">My Work</a></li>
+                <li><a href="#section3">My Blogs</a></li>
+                <li><a href="#section4">Contact Me</a></li>
+              </ul>
+            </nav>
+            <div class="social-network">
+              <ul class="soial-icons">
+                <li>
+                  <a href="https://github.com/tenzinchoedhen" target="_blank"><i class="fa fa-github"></i></a>
+                </li>
+                <li>
+                  <a href="https://www.linkedin.com/in/tenzin-choedhen/" target="_blank"><i class="fa fa-linkedin"></i></a>
+                </li>
+              </ul>
+            </div>
+            <div class="copyright-text">
+              <p>&copy; 2025 Tenzin Choedhen</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="section about-me" data-section="section1">
+
+        <div class="col-md-12" style="text-align: center; color: hwb(348 13% 20%);">
+          ~ Projects and blogs coming soon. Thank you for visiting. ~
+        </div>
+        
+        <div class="container">
+          <div class="section-heading">
+            <h2>About Me</h2>
+            <div class="line-dec"></div>
+            <span
+              >Hi! I’m a Business Analytics graduate student with a background in software development and business intelligence, 
+              mainly in the financial and manufacturing sectors. I’m passionate about digital transformation and 
+              finding ways to automate business processes. Check out some of my works here!
+              </span>
+          </div>
+          
+          <div class="left-image-post">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="left-text">
+                  <h4><i class="fas fa-graduation-cap"></i> Education</h4>
+                  <p>
+                    <strong>University of New Haven, CT</strong><br>
+                    <span><em>Master of Science in Business Analytics (ongoing)</em></span><br><br>
+                    <strong>Chiba Institute of Technology, Japan</strong><br>
+                    <span><em>Master of Engineering in Computer Science</em></span><br><br>
+                    <strong>SJB Institute of Technology, India</strong><br>
+                    <span><em>Bachelor of Engineering in Computer Science</em></span>
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="right-text">
+                  <h4><i class="fas fa-briefcase"></i> Professional Experiences</h4>
+                  <p>
+                    <strong>IT Graduate Intern, Daimler AG, Japan</strong><br>
+                    <span><em>January 2023 - June 2023</em></span><br><br>
+                    <strong>Software Developer, First American Corporation, India</strong><br>
+                    <span><em>July 2019 - January 2021</em></span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="right-image-post">
+            <div class="col-md-12" style="text-align: center;">
+              <strong><a href="assets/Tenzin_Choedhen.pdf" download style="color: red;">Download my resume</a></strong><br>
+            </div>            
+          </div>
+        </div>
+      </section>
+
+      <section class="section my-work" data-section="section2">
+        <div class="container">
+          <div class="section-heading">
+            <h2>My Work</h2>
+            <div class="line-dec"></div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <a href="mywork/project-1.html" target="_blank">
+                <div class="service-item">
+                  <div class="first-service-icon service-icon"></div>
+                  <h4>Project Title 1</h4>
+                  <p>
+                    Coming soon...
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-6">
+              <a href="mywork/project-2.html" target="_blank">
+                <div class="service-item">
+                  <div class="second-service-icon service-icon"></div>
+                  <h4>Project Title 2</h4>
+                  <p>
+                    Coming soon...
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-6">
+              <a href="mywork/project-3.html" target="_blank">
+                <div class="service-item">
+                  <div class="third-service-icon service-icon"></div>
+                  <h4>Project Title 3</h4>
+                  <p>
+                    Coming soon...
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-6">
+              <a href="mywork/project-4.html" target="_blank">
+                <div class="service-item">
+                  <div class="fourth-service-icon service-icon"></div>
+                  <h4>Project Title 4</h4>
+                  <p>
+                    Coming soon...
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section my-blogs" data-section="section3">
+        <div class="container">
+          <div class="section-heading">
+            <h2>My Blogs</h2>
+            <div class="line-dec"></div>
+          </div>
+          <div class="row">
+            <div class="isotope-wrapper">
+              <form class="isotope-toolbar">
+                <label
+                  ><input
+                    type="radio"
+                    data-type="*"
+                    checked=""
+                    name="isotope-filter"
+                  />
+                  <span>all</span></label
+                >
+                <label
+                  ><input
+                    type="radio"
+                    data-type="technology"
+                    name="isotope-filter"
+                  />
+                  <span>technology</span></label
+                >
+                <label
+                  ><input
+                    type="radio"
+                    data-type="personal"
+                    name="isotope-filter"
+                  />
+                  <span>personal</span></label
+                >
+              </form>
+              <div class="isotope-box">
+
+                <div class="isotope-item" data-type="technology">
+                  <figure class="snip1321">
+                    <a href="blogs/blog-1.html" target="_blank">
+                      <img
+                      src="assets/images/blog-01.jpg"
+                      alt="sq-sample26"
+                      />
+                      <figcaption>
+                        <i class="fa fa-search"></i>
+                        <h4>Blog Title 1</h4>
+                        <span>Coming soon...</span>
+                      </figcaption>
+                    </a>
+                  </figure>
+                </div>
+
+                <div class="isotope-item" data-type="personal">
+                  <figure class="snip1321">
+                    <a href="blogs/blog-2.html" target="_blank">
+                      <img
+                      src="assets/images/blog-02.jpg"
+                      alt="sq-sample26"
+                      width="100" 
+                      height="200"
+                      />
+                      <figcaption>
+                        <i class="fa fa-search"></i>
+                        <h4>Blog Title 2</h4>
+                        <span>Coming soon...</span>
+                      </figcaption>
+                    </a>
+                  </figure>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section contact-me" data-section="section4">
+        <div class="container">
+          <div class="section-heading">
+            <h2>Contact Me</h2>
+            <div class="line-dec"></div>
+            <span
+              >Feel free to reach out via email at <strong>tenzin.choedhen.jp@gmail.com</strong> or by filling out the form below.</span
+            >
+          </div>
+          <div class="row">
+            <div class="right-content">
+              <div class="container">
+                <form id="contact">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <fieldset>
+                        <input
+                          name="name"
+                          type="text"
+                          class="form-control"
+                          id="name"
+                          placeholder="Your name... (optional)"
+                        />
+                      </fieldset>
+                    </div>
+                    <div class="col-md-6">
+                      <fieldset>
+                        <input
+                          name="email"
+                          type="text"
+                          class="form-control"
+                          id="email"
+                          placeholder="Your email... (optional)"
+                        />
+                      </fieldset>
+                    </div>
+                    <div class="col-md-12">
+                      <fieldset>
+                        <textarea
+                          name="message"
+                          rows="6"
+                          class="form-control"
+                          id="message"
+                          placeholder="Your message... (required)"
+                          required=""
+                        ></textarea>
+                      </fieldset>
+                    </div>
+                    <div class="col-md-12">
+                      <fieldset>
+                        <button type="submit" id="form-submit" class="button">
+                          Send Message
+                        </button>
+                      </fieldset>
+                    </div>
+                  </div>
+                </form>
+                <!-- Status message container -->
+                <div id="status-message" style="margin-top: 10px; font-weight: bold; text-align: center;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Email Service: EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+    <script src="assets/js/isotope.min.js"></script>
+    <script src="assets/js/owl-carousel.js"></script>
+    <script src="assets/js/lightbox.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script>
+      //according to loftblog tut
+      $(".main-menu li:first").addClass("active");
+
+      var showSection = function showSection(section, isAnimate) {
+        var direction = section.replace(/#/, ""),
+          reqSection = $(".section").filter(
+            '[data-section="' + direction + '"]'
+          ),
+          reqSectionPos = reqSection.offset().top - 0;
+
+        if (isAnimate) {
+          $("body, html").animate(
+            {
+              scrollTop: reqSectionPos
+            },
+            800
+          );
+        } else {
+          $("body, html").scrollTop(reqSectionPos);
+        }
+      };
+
+      var checkSection = function checkSection() {
+        $(".section").each(function() {
+          var $this = $(this),
+            topEdge = $this.offset().top - 80,
+            bottomEdge = topEdge + $this.height(),
+            wScroll = $(window).scrollTop();
+          if (topEdge < wScroll && bottomEdge > wScroll) {
+            var currentId = $this.data("section"),
+              reqLink = $("a").filter("[href*=\\#" + currentId + "]");
+            reqLink
+              .closest("li")
+              .addClass("active")
+              .siblings()
+              .removeClass("active");
+          }
+        });
+      };
+
+      $(".main-menu").on("click", "a", function(e) {
+        e.preventDefault();
+        showSection($(this).attr("href"), true);
+      });
+
+      $(window).scroll(function() {
+        checkSection();
+      });
+    </script>
+
+    <script>
+      // Initialise email service
+      (function() {
+        emailjs.init("wNE0UylssShpkYLCY"); // Replace with your Public Key
+      })();
+    </script>
+
+    <script>
+      //Sending message
+      document.getElementById('contact').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const statusMessage = document.getElementById('status-message');
+        statusMessage.style.color = 'white'; 
+        statusMessage.textContent = 'Sending...'; // Indicate that the message is being sent
+
+        emailjs.sendForm('tenchoe_gmail_service', 'template_cgmnqxq', this)
+        .then(function() {
+          statusMessage.style.color = 'green';
+          statusMessage.textContent = 'Message sent successfully!';
+          document.getElementById("contact").reset();
+        }, function(error) {
+          statusMessage.style.color = 'red';
+          statusMessage.textContent = 'Failed to send message. Please try again.';
+          console.error('Error:', JSON.stringify(error)); 
+        });
+      });
+    </script>
+
+  </body>
+</html>
