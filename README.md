@@ -39,5 +39,5 @@ administrative overhead
 - Performed Exploratory Data Analysis and designed ML classification models (SVM, Random Forest) and ARIMA time- series forecasting, achieving 83% accuracy on 250+ records for predictive analytics.
 - Created Power BI and R Shiny dashboards for KPI tracking and implemented workflow automation and database optimization, improving data pipeline efficiency and lead generation.
 
-![BI Soulution](/assets/img/bi-solution.jpeg)
+![BI Soulution](/assets/img/bi-solution.png)
 
