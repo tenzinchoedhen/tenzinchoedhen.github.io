@@ -3,7 +3,7 @@
 #### Technical Skills: R, Python, SQL, AWS, Snowflake, Power BI, Tableau
 
 ## Education							       		
-- M.S., Analytics	| University of New Haven | Provost Scholar (_May 2026_)		
+M.S., Analytics	| University of New Haven | Provost Scholar (_May 2026_)		
 
 ## Work Experience
 **Business Data Analyst - GA @ University of New Haven (_Octber 2024 - Present_)**
