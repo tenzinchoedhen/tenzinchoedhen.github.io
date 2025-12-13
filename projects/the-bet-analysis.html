@@ -1,0 +1,209 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>The Simon-Ehrlich Bet</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="../index.html">Tenzin Choedhen</a></h1>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<div class="inner">
+							<h2>Menu</h2>
+							<ul class="links">
+								<li><a href="../index.html">Home</a></li>
+								<li><a href="../about-me.html">About Me</a></li>
+								<li><a href="../portfolio.html">Portfolio</a></li>
+							</ul>
+							<a href="#" class="close">Close</a>
+						</div>
+					</nav>
+
+				<!-- Wrapper -->
+					<section id="wrapper">
+						<header>
+							<div class="inner">
+								<h2>The Simon-Ehrlich Bet: A Data Analysis (1980-1990)</h2>
+								<p>Time Series Analysis & Economic Data Visualization using R and Federal Reserve Data</p>
+								<ul class="actions">
+									<li><a href="https://github.com/tenzinchoedhen/R-Projects/blob/main/The_Bet_Analysis.R" class="button small" target="_blank">Complete R analysis code</a></li>
+								</ul>
+							</div>
+						</header>
+
+						<!-- Content -->
+							<div class="wrapper">
+								<div class="inner">
+
+									<h3 class="major">Project Overview</h3>
+									<h4>Objective</h4> 
+									<p>Analyze historical commodity price data to evaluate the famous wager between economist Julian Simon and biologist Paul Ehrlich regarding resource scarcity.</p>
+									<h4>Tools Used</h4> 
+									<p>R (tidyverse, ggplot2, pdfetch, dygraphs)</p>
+									<h4>Key Skills Demonstrated</h4>
+									<ul>
+										<li>Time series data processing and visualization</li>
+										<li>Inflation adjustment using Consumer Price Index data</li>
+										<li>Multi-source data integration</li>
+										<li>Statistical analysis and economic interpretation</li>
+									</ul>
+									<br>
+
+									<h3 class="major">The Analysis</h3>
+									<h4>Background</h4> 
+									<p>In 1980, Julian Simon wagered that the inflation-adjusted prices of five strategic metals (copper, chromium, nickel, tin, and tungsten) would decrease over the next decade, contradicting Paul Ehrlich's prediction of increasing resource scarcity.</p>
+									<h4>Data Sources</h4>
+									<ul>
+										<li>Metal Prices: U.S. Geological Survey historical data (1840-2010)</li>
+										<li>Inflation Adjustment: Federal Reserve CPI data (FRED database)</li>
+										<li>Analysis Period: 1980-1990</li>
+									</ul>
+
+									<h4>1. Data Import and Processing</h4>
+									<pre><code># Import metal price data from USGS
+tungsten <- import("https://pubs.usgs.gov/sir/2012/5188/tables/tungsten.xlsx", skip = 2)
+copper <- import("https://pubs.usgs.gov/sir/2012/5188/tables/copper.xlsx", skip = 2)
+# ... (chromium, nickel, tin)
+
+# Convert to time series objects
+tungsten.ts <- ts(tungsten, start=c(1959), end=c(2010), frequency=1)
+copper.ts <- ts(copper, start=c(1850), frequency=1)
+# ... (chromium, nickel, tin)</code></pre>
+
+									<h4>2. Inflation Adjustment</h4>
+									<pre><code># Download CPI data from FRED
+cpi <- pdfetch_FRED("CPIAUCSL")
+cpi.annual <- window(cpi.ts, start = c(1959), end = c(2010), frequency = 1)
+
+# Calculate real (inflation-adjusted) prices
+real_P_tungsten = tungsten.ts * 100 / cpi.annual
+real_P_copper = copper.ts * 100 / cpi.annual
+# ... (remaining metals)</code></pre>
+
+									<h4>3. Composite Index Creation</h4>
+									<pre><code># Combine all metals into wide format
+stockdata4_real <- mydata_real_final %>% 
+  pivot_wider(names_from = series, values_from = value)
+
+# Create composite index (simple average)
+stockdata4_real$BigfatIndex_Real <- rowSums(stockdata4_real[2:6]) / 5</code></pre>
+
+									<h4>4. Visualization with ggplot2</h4>
+									<pre><code># Combined plot: Individual metals + Composite Index
+p_real_combined <- real_combined %>%
+  mutate(series = factor(series, levels = c("tungsten", "copper", "chromium", 
+                                             "nickel", "tin", "Composite Index"))) %>%
+  ggplot(aes(x = index, y = value, col = series)) + 
+  geom_line(aes(linewidth = series == "Composite Index",
+                linetype = series == "Composite Index")) +
+  scale_linewidth_manual(values = c(0.5, 1.5), guide = "none") +
+  geom_point(data = values_1980_1990_real, size = 2) +
+  geom_text(data = values_1980_1990_real, 
+            aes(label = round(value, 1)), vjust = -0.5, size = 3) +
+  labs(title = "Real Prices of Five Metals During The Bet (1980-1990)",
+       x = "Year", y = "Real Price (Inflation-Adjusted)") +
+  theme_minimal()</code></pre>
+
+
+									<br>
+  									<h3 class="major">Results</h3>
+									<h4>Key Visualizations</h4> 
+									<div class="box alt">
+										<div class="row gtr-uniform">
+											<div class="col-12"><span class="image fit"><img src="../images/the-bet-analysis/pic01.png" alt="" /></span></div>
+										</div>
+									</div>
+									<p><strong>Figure 1: Real Prices During the Bet Period: </strong>All five metals showed declining inflation-adjusted prices from 1980-1990. The composite index (dashed line) fell by 32.2%.</p>
+									<div class="box alt">
+										<div class="row gtr-uniform">
+											<div class="col-12"><span class="image fit"><img src="../images/the-bet-analysis/pic02.png" alt="" /></span></div>
+										</div>
+									</div>
+									<p><strong>Figure 2: Rebased Index (1980 = 100): </strong>When normalized to a baseline of 100 in 1980, all metals finished below the starting point by 1990.</p>
+									
+									<h4>Winner</h4> 
+									<p>Julian Simon collected $576.07 from Paul Ehrlich in October 1990, as all five metals declined in real price.</p>
+
+									<br>
+									<h3 class="major">Insights</h3>
+									<p>Market Forces Driving Price Declines:</p>
+									<h4>Supply-Side Factors:</h4> 
+									<ul>
+										<li>New mining technologies reduced extraction costs</li>
+										<li>Discovery of new deposits expanded global reserves</li>
+										<li>Improved processing efficiency increased yields</li>
+										<li>Post-Cold War supply expansion from former Soviet bloc</li>
+									</ul>
+									<h4>Demand-Side Factors:</h4> 
+									<ul>
+										<li>Early 1980s recessions reduced industrial demand</li>
+										<li>Materials science advances enabled substitution (e.g., fiber optics replacing copper)</li>
+										<li>Manufacturing efficiency improvements reduced material intensity</li>
+										<li>Electronic miniaturization decreased per-unit requirements</li>
+									</ul>
+
+									<br>
+									<h3 class="major">Conclusion</h3>
+									<p>This analysis demonstrates how market mechanisms and technological innovation responded to perceived resource scarcity during the 1980s. While Simon won the specific bet, the broader debate about resource sustainability continues to inform contemporary policy discussions around critical minerals, renewable energy and environmental limits.</p>
+									<h4>Technical Achievement</h4> 
+									<p>Successfully integrated multiple data sources, performed inflation adjustment calculations, created composite indices, and developed clear visualizations to communicate complex economic trends.</p>
+									
+								</div>
+							</div>
+
+					</section>
+
+				<!-- Footer -->
+					<section id="footer">
+						<div class="inner">
+							<h2 class="major">Get in touch</h2>
+							<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+								<div>
+									<ul class="contact">
+										<li class="icon solid fa-home">
+											New Haven,<br />
+											Connecticut, USA
+										</li>
+										<li class="icon solid fa-phone">(617) 676-8927</li>
+									</ul>
+								</div>
+								<div>
+									<ul class="contact">
+										<li class="icon solid fa-envelope"><a href="mailto:tenchoe.choedhen@gmail.com">tenchoe.choedhen@gmail.com</a></li>
+										<li class="icon brands fa-linkedin"><a href="https://www.linkedin.com/in/tenzin-choedhen/">linkedin.com/in/tenzin-choedhen</a></li>
+									</ul>
+								</div>
+							</div>
+
+							<ul class="copyright">
+								<li>&copy; Tenzin Choedhen. All rights reserved.</li>
+							</ul>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/browser.min.js"></script>
+			<script src="../assets/js/breakpoints.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+
+	</body>
+</html>
