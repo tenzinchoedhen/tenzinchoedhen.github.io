@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Connecticut New Business Registrations</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="../index.html">Tenzin Choedhen</a></h1>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<div class="inner">
+							<h2>Menu</h2>
+							<ul class="links">
+								<li><a href="../index.html">Home</a></li>
+								<li><a href="../about-me.html">About Me</a></li>
+								<li><a href="../portfolio.html">Portfolio</a></li>
+							</ul>
+							<a href="#" class="close">Close</a>
+						</div>
+					</nav>
+
+				<!-- Wrapper -->
+					<section id="wrapper">
+						<header>
+							<div class="inner">
+								<h2>Connecticut New Business Registrations</h2>
+								<p>Excel for data preprocessing and Tableau for dashboard</p>
+								<ul class="actions">
+									<li><a href="https://drive.google.com/drive/folders/1IdDroORBVaKhbD-p1pPJphCoZvikYrKJ" class="button small" target="_blank">Complete Business Registrations Data</a></li>
+								</ul>
+							</div>
+						</header>
+
+						<!-- Content -->
+							<div class="wrapper">
+								<div class="inner">
+
+									<h3 class="major">Introduction</h3>
+									<p>This analysis examines business registration patterns in Connecticut during the first quarter of 2025 and compares it with fourth quarter of 2024, providing insights into the state's economic vitality and sectoral trends. </p>
+									<h4>Tools and Technologies</h4>
+									<ul>
+										<li><strong>Data Sources: </strong>Connecticut Secretary of State's Office (6 monthly Excel files from October 2024 to March 2025, ~30,000 records)</li>
+										<li><strong>Data Cleaning: </strong>Excel for initial consolidation and standardization</li>
+										<li><strong>Data Validation: </strong>U.S. Census Bureau NAICS Database (census.gov/naics)</li>
+										<li><strong>Visualization: </strong>Tableau Public for interactive dashboard design</li>
+										<li><strong>Analysis Techniques: </strong>Time series analysis, industry classification, geographic filtering</li>
+									</ul>
+									<br>
+									
+									<h3 class="major">Data Preprocessing</h3>
+									<h4>Challenge 1: Data Consolidation Across Multiple Files</h4>
+									<ul>
+										<li><strong>Problem: </strong>Six separate monthly Excel files (~5,000 rows each) needed to be combined while maintaining data integrity</li>
+										<li><strong>Solution: </strong>Developed systematic consolidation process ensuring consistent field mapping and no duplicate records; validated total record counts post-merge</li>
+									</ul>
+									<h4>Challenge 2: Inconsistent City Name Entry</h4>
+									<ul>
+										<li><strong>Problem: </strong>Self-reported city names contained spelling errors, capitalization inconsistencies and format variations (e.g., "Danbury," "danbury," "Danburry")</li>
+										<li><strong>Solution: </strong>Created standardization rules and manually reviewed/corrected city names to ensure accurate geographic analysis and filtering functionality</li>
+									</ul>
+									<h4>Challenge 3: NAICS Code Validation</h4>
+									<ul>
+										<li><strong>Problem: </strong>Industry codes required verification for accuracy; some codes were invalid or outdated</li>
+										<li><strong>Solution: </strong>Cross-referenced all codes against official U.S. Census Bureau NAICS database; documented validation process; excluded records with missing codes rather than making assumptions</li>
+									</ul>
+									<h4>Challenge 4: Defining Business Starts vs. Stops</h4>
+									<ul>
+										<li><strong>Problem: </strong>Status field contained multiple values that needed logical grouping</li>
+										<li><strong>Solution: </strong>Created clear classification rules: "Active" = starts; "Dissolved", "Withdrawn" and similar statuses = stops;</li>
+									</ul>
+									<h4>Challenge 5: Handling Missing Data</h4>
+									<ul>
+										<li><strong>Problem: </strong>Approximately 20-30% of registrations lacked NAICS industry codes</li>
+										<li><strong>Solution: </strong>Excluded these records from industry analysis rather than imputing values; clearly stated this limitation in dashboard to maintain transparency</li>
+									</ul>
+									<br>
+
+									<h3 class="major">Dashboard</h3>
+									<div class='tableauPlaceholder' id='viz1765588696239' style='position: relative'><noscript><a href='#'><img alt='Dashboard ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Co&#47;ConnecticutNewBusinessRegistrations_17545331248960&#47;Dashboard&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='ConnecticutNewBusinessRegistrations_17545331248960&#47;Dashboard' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Co&#47;ConnecticutNewBusinessRegistrations_17545331248960&#47;Dashboard&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1765588696239');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='1427px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+									<br>
+
+									<h3 class="major">Key Insights</h3>
+									<h4>1. Service Sectors Dominate Formation</h4>
+									<p>Real Estate (2,012), Professional Services (1,514), and Construction (1,328) account for nearly 50% of all new businesses. This concentration signals strong property market activity but also reveals over-reliance on service-based economy.</p>
+									<h4>2. Traditional Industries Struggling</h4>
+									<ul>
+										<li><strong>Manufacturing (392): </strong>Low formation indicates continued challenges competing with lower-cost regions</li>
+										<li><strong>Finance & Insurance (258): </strong>Surprisingly weak for Connecticut's historic insurance hub; suggests market saturation or consolidation</li>
+										<li><strong>Information/Technology (246): </strong>Underperformance despite educated workforce and national tech trends</li>
+									</ul>
+									<h4>3. Capital-Intensive Sectors Face Barriers</h4>
+									<p>Utilities (23), Public Administration (22) and Mining (4) show minimal activity due to high regulatory burdens, capital requirements and resource constraints. These sectors remain concentrated among established players.</p>
+									<h4>4. Healthy Business Formation, But Monitor Survival</h4>
+									<p>Business starts (4,000+/month) significantly exceed stops (300-400/month), indicating economic confidence. However, many 2024-2025 registrants haven't reached the critical 1-2 year failure window yet; continued tracking essential.</p>
+									<h4>5. Mid-Tier Opportunities Emerge</h4>
+									<p>Healthcare (655), Transportation/Warehousing (565) and Food Services (512) show balanced growth with manageable competition; ideal sectors for entrepreneurs seeking sustainable markets without Real Estate's oversaturation.</p>
+									
+									<h3 class="major">Conclusion</h3>
+									<p>Connecticut's Q1 2025 business formation data reveals a economy in transition with service sectors thriving. Real Estate and Professional Services drive nearly 50% of new registrations, but concerning gaps in Manufacturing, Finance and Technology suggest structural challenges requiring strategic intervention. The positive gap between business starts and stops indicates short-term health, though true sustainability depends on survival rates as the 2024-2025 cohort matures. For stakeholders, this analysis identifies both high-competition markets requiring differentiation and underserved opportunities in mid-tier sectors like Healthcare and Transportation, providing a roadmap for targeted economic development, investment decisions and policy initiatives.</p>
+									<h4>Technical Achievement</h4>
+									<p>Demonstrated comprehensive data analyst skills including data consolidation and ETL (merging 6 Excel files with ~30,000 records), data quality management (standardizing inconsistent city entries and validating NAICS codes against census.gov), business logic development (classifying registration statuses into starts/stops metrics), data visualization (building interactive Tableau dashboards with multiple chart types and filters), business intelligence analysis (identifying sectoral trends and providing strategic insights) and technical documentation (transparently communicating methodology and data limitations). </p>
+								</div>
+							</div>
+
+					</section>
+
+				<!-- Footer -->
+					<section id="footer">
+						<div class="inner">
+							<h2 class="major">Get in touch</h2>
+							<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+								<div>
+									<ul class="contact">
+										<li class="icon solid fa-home">
+											New Haven,<br />
+											Connecticut, USA
+										</li>
+										<li class="icon solid fa-phone">(617) 676-8927</li>
+									</ul>
+								</div>
+								<div>
+									<ul class="contact">
+										<li class="icon solid fa-envelope"><a href="mailto:tenchoe.choedhen@gmail.com">tenchoe.choedhen@gmail.com</a></li>
+										<li class="icon brands fa-linkedin"><a href="https://www.linkedin.com/in/tenzin-choedhen/">linkedin.com/in/tenzin-choedhen</a></li>
+									</ul>
+								</div>
+							</div>
+
+							<ul class="copyright">
+								<li>&copy; Tenzin Choedhen. All rights reserved.</li>
+							</ul>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/browser.min.js"></script>
+			<script src="../assets/js/breakpoints.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+
+	</body>
+</html>
