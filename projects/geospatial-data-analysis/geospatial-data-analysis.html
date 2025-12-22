@@ -1,0 +1,437 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Geospatial Data Analysis</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../../assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="../../index.html">Tenzin Choedhen</a></h1>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<div class="inner">
+							<h2>Menu</h2>
+							<ul class="links">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../../about-me.html">About Me</a></li>
+								<li><a href="../../portfolio.html">Portfolio</a></li>
+							</ul>
+							<a href="#" class="close">Close</a>
+						</div>
+					</nav>
+
+				<!-- Wrapper -->
+					<section id="wrapper">
+						<header>
+							<div class="inner">
+								<h2>Geospatial Data Analysis and Visualization Using R</h2>
+								<p>R's Geospatial Toolkit: sf, ggplot, st_transform, Interactive Leaflet Maps</p>
+								<ul class="actions">
+									<li><a href="https://github.com/tenzinchoedhen/Geospatial-Data-Analysis" class="button small" target="_blank">Complete R analysis code</a></li>
+									<li><a href="https://rpubs.com/tenzinchoedhen/geospatial-data-analysis" class="button small" target="_blank">RPubs Publication</a></li>
+								</ul>
+							</div>
+						</header>
+
+						<!-- Content -->
+							<div class="wrapper">
+								<div class="inner">
+									<h3 class="major">Overview</h3>
+									<p>This analysis explores geospatial data visualization using R, based on:</p>
+									<ul>
+										<li><strong>Wilke, Chapter 15</strong> – Visualizing Geospatial Data</li>
+										<li><strong>Healy, Chapter 7</strong> – Draw Maps</li>
+									</ul>
+									<p>All code and key outputs are presented with interpretations focusing on:</p>
+									<ul>
+										<li>What the maps show</li>
+										<li>How design choices affect interpretation</li>
+										<li>Potential pitfalls or misreadings</li>
+									</ul>
+									<br>
+									<!-- Section 1 -->
+									<h3 class="major">1. State-level choropleth & map design</h3>
+									<p>Healy’s chapter showed how to build choropleth maps using <em>maps::map_data("state")</em> and the <em>socviz::election</em> data. Let's explore how.</p>
+									
+									<h4>1(a) Building a basic state-level choropleth</h4>
+									<p>Using 2016 U.S. Presidential election results to create a state-level choropleth showing the winning candidate:</p>
+									
+									<pre><code>
+# Loading election data
+data("election")<br>
+# Loading state map data
+state_map <- map_data("state")<br>
+# Preparing election data 
+election_state <- election %>%
+  mutate(
+    region = tolower(state) # to join with state map data
+  )<br>
+# Joining map and election data
+state_choropleth <- state_map %>%
+  left_join(election_state, by = "region")<br>
+# Creating the choropleth map
+ggplot(state_choropleth, aes(x = long, y = lat, group = group)) +
+  geom_polygon(aes(fill = party, alpha = pct_margin), color = "white") +
+  coord_quickmap() +
+  scale_fill_manual(
+    values = c("Democratic" = "#2166AC", "Republican" = "#B2182B")
+  )
+									</pre></code>
+
+									<div>
+										<div class="box alt">
+											<div class="row gtr-uniform">
+												<div class="col-12">
+													<span class="image fit">
+														<img src="../../images/geospatial-data-analysis/election-basic-map.png" alt="Basic election choropleth" />
+													</span>
+												</div>
+											</div>
+											<p><em>Figure 1: 2016 Presidential Election results by state with color opacity indicating winning margin</em></p>
+										</div>
+									</div>
+
+									<h4>1(b) Comparing two color schemes</h4>
+									
+									<pre><code>
+# Preparing election data 
+state_choropleth <- state_choropleth %>%
+  mutate(
+    signed_margin = ifelse(party == "Democratic", -pct_margin, pct_margin) # since pct_margin is absolute value
+  )
+
+# Creating choropleth map with diverging color scale 
+ggplot(state_choropleth, aes(x = long, y = lat, group = group, fill = signed_margin)) +
+  geom_polygon(color = "white") +
+  coord_quickmap() +
+  scale_fill_gradient2(
+    low = "#2166AC",      # Blue for Democratic wins
+    mid = "#F0F0F0",      # Light Grey for close races
+    high = "#B2182B",     # Red for Republican wins
+    midpoint = 0
+  )
+									</pre></code>
+
+									<div>
+										<div class="box alt">
+											<div class="row gtr-uniform">
+												<div class="col-12">
+													<span class="image fit">
+														<img src="../../images/geospatial-data-analysis/election-diverging.png" alt="Diverging color scale" />
+													</span>
+												</div>
+											</div>
+											<p><em>Figure 2: Diverging color scale (blue = Democratic, red = Republican)</em></p>
+										</div>
+									</div>
+
+									<pre><code>
+# Creating choropleth map with sequential color scale 
+ggplot(state_choropleth, aes(x = long, y = lat, group = group)) +
+  geom_polygon(aes(alpha = pct_margin), color = "white") +
+  coord_quickmap()
+									</pre></code>
+
+									<div>
+										<div class="box alt">
+											<div class="row gtr-uniform">
+												<div class="col-12">
+													<span class="image fit">
+														<img src="../../images/geospatial-data-analysis/election-sequential.png" alt="Sequential color scale" />
+													</span>
+												</div>
+											</div>
+											<p><em>Figure 3: Sequential color scale (showing only margin magnitude)</em></p>
+										</div>
+									</div>
+
+									<blockquote>
+										<strong>Interpretation:</strong> The diverging color scale is better for seeing who won because blue and red directly indicate the winner. The sequential scale is better for comparing competitiveness by focusing only on margin size regardless of party, making swing states and safe states easy to distinguish.
+									</blockquote>
+
+									<h4>1(c) Area vs. votes: interpreting state-level choropleth</h4>
+									
+									<blockquote>
+										<strong>Key Insight:</strong> Choropleths exaggerate importance because they show geographic area, not population or votes. Big empty states like Wyoming take up huge visual space despite tiny populations, while small dense states like New Jersey barely show up despite having more people and political weight.<br><br>
+										<strong>Alternative:</strong> A cartogram heatmap (tile grid map) would represent each state as an equal-sized square, ensuring Wyoming receives the same visual weight as California. This removes geographic area bias entirely.
+									</blockquote><br>
+
+									<!-- Section 2 -->
+										<h3 class="major">2. World maps with sf and projections</h3>
+										<p>Wilke emphasizes the importance of projections and choropleth mapping. Let’s explore different projections using sf object of world countries.</p>
+
+										<h4>2(a) Basic world choropleth with sf</h4>
+										<p>Exploring global life expectancy using the spData world dataset:</p>
+
+										<pre><code>
+# Loading world data
+data("world", package = "spData")<br>
+# producing a choropleth world
+ggplot(world) +
+  geom_sf(aes(fill = lifeExp)) +
+  coord_sf() +
+  theme_minimal()
+										</pre></code>
+
+										<div>
+											<div class="box alt">
+												<div class="row gtr-uniform">
+													<div class="col-12">
+														<span class="image fit">
+															<img src="../../images/geospatial-data-analysis/world-lifeexp.png" alt="World life expectancy map" />
+														</span>
+													</div>
+												</div>
+												<p><em>Figure 4: Global life expectancy by country</em></p>
+											</div>
+										</div>
+
+										<h4>2(b) Comparing projections</h4>
+										<p>Presenting the same data under at least two different projected CRSs like a Web Mercator–type projection and an equal-area projection (e.g., Mollweide, Robinson or equal-area Albers).</p>
+
+										<pre><code>
+# Web Mercator projection
+world_mercator <- st_transform(world, crs = "EPSG:3857")
+# Mollweide equal-area projection
+world_mollweide <- st_transform(world, crs = "ESRI:54009")
+
+# Web Mercator projection
+p_mercator <- ggplot(world_mercator) +
+  geom_sf(aes(fill = lifeExp)) +
+  theme_minimal()
+
+# Mollweide equal-area projection
+p_mollweide <- ggplot(world_mollweide) +
+  geom_sf(aes(fill = lifeExp)) +
+  theme_minimal()
+
+# Displaying side by side
+(p_mercator | p_mollweide) + 
+  plot_layout(widths = c(1, 1))
+										</pre></code>
+
+										<div>
+											<div class="box alt">
+												<div class="row gtr-uniform">
+													<div class="col-12">
+														<span class="image fit">
+															<img src="../../images/geospatial-data-analysis/projection-comparison.png" alt="Projection comparison" />
+														</span>
+													</div>
+												</div>
+												<p><em>Figure 5: Web Mercator (left) vs. Mollweide equal-area (right) projections</em></p>
+											</div>
+										</div>
+
+										<blockquote>
+											<strong>Interpretation:</strong> Map projections change how regions appear. Web Mercator preserves shapes locally but makes polar regions look huge (Greenland appears much larger than it is). Mollweide preserves true area but distorts shapes.<br><br>
+											For life expectancy data, an equal-area projection like Mollweide is better because it accurately represents country sizes, which matters when comparing populations. This follows Wilke's principle that for data tied to area or population, equal-area maps are more appropriate.
+										</blockquote>
+
+										<!-- Section 3 -->
+										<h3 class="major">3. County-level choropleth with design choices</h3>
+										<p>Healy’s book uses county-level maps to illustrate how small spatial units can make choropleths visually complex. Let's explore how.</p>
+
+										<h4>3(a) National county-level choropleth</h4>
+										<p>Mapping median household income across all U.S. counties:</p>
+
+										<pre><code>
+# county_map - geometry for U.S. counties
+# county_data - attributes (e.g., demographic and economic variables)
+# Loading the above data
+data("county_map", "county_data", package = "socviz")
+
+# Joining county map and data
+county_full <- county_map %>%
+  left_join(county_data, by = "id")
+
+# Creating national county-level choropleth for median household income
+ggplot(county_full, aes(x = long, y = lat, group = group, fill = hh_income)) +
+  geom_polygon() +  # No borders for cleaner appearance
+  coord_quickmap() +
+  theme_tufte()
+										</pre></code>
+
+										<div>
+											<div class="box alt">
+												<div class="row gtr-uniform">
+													<div class="col-12">
+														<span class="image fit">
+															<img src="../../images/geospatial-data-analysis/county-income-national.png" alt="National county income map" />
+														</span>
+													</div>
+												</div>
+												<p><em>Figure 6: Median household income by county, United States</em></p>
+											</div>
+										</div>
+
+										<h4>3(b) Regional focus: South</h4>
+
+										<pre><code>
+# Filtering for South census region
+county_south <- county_full %>%
+  filter(census_region == "South")
+
+# Creating regional map for South
+ggplot(county_south, aes(x = long, y = lat, group = group, fill = hh_income)) +
+  geom_polygon() +
+  coord_quickmap() +
+  theme_tufte()
+										</pre></code>
+
+										<div>
+											<div class="box alt">
+												<div class="row gtr-uniform">
+													<div class="col-12">
+														<span class="image fit">
+															<img src="../../images/geospatial-data-analysis/county-income-south.png" alt="South region income map" />
+														</span>
+													</div>
+												</div>
+												<p><em>Figure 7: Median household income in the South region</em></p>
+											</div>
+										</div>
+
+										<blockquote>
+											<strong>Interpretation:</strong> The regional map makes it easier to spot local patterns like wealthy clusters around major metros (Northern Virginia, Atlanta) and clear poverty pockets in the Mississippi Delta and Appalachia.<br><br>
+											The national map can mislead by making large, sparsely populated Western counties look more important simply because they take up more space, while overwhelming readers with thousands of tiny counties.<br><br>
+											<strong>Alternative:</strong> A dot plot would avoid geographic area bias by treating all counties equally. Each dot represents one county plotted by household income (y-axis) and grouped by state (x-axis), with colors indicating census region (Northeast, South, Midwest, West). This would enable identification without spatial distortion in a way that tiny Rhode Island counties receive the same visual weight as sprawling Alaska counties.
+										</blockquote>
+
+										<!-- Section 4 -->
+										<h3 class="major">4. OpenStreetMap around the White House</h3>
+										<p>In this section, let's select an area manually around the White House in Washington, DC, download OpenStreetMap data as GeoJSON and map features using sf in R.</p>
+
+										<h4>4(a) Defining a bounding box and downloading GeoJSON</h4>
+										<ol>
+											<li>Navigate to <a href="https://overpass-turbo.eu/">Overpass Turbo</a></li>
+											<li>Pan and zoom to the White House area (include several blocks in each direction)</li>
+											<li>Select features of interest: buildings, roads, parks or points of interest</li>
+											<li>Download as GeoJSON</li>
+										</ol>
+
+										<h4>4(b) Static ggplot2 + sf map</h4>
+										<p>Government buildings and green spaces near the White House:</p>
+
+										<pre><code>
+# Loading GeoJSON file
+wh_features <- read_sf("white_house_area.geojson")
+
+# All buildings for base layer
+all_buildings <- wh_features %>%
+  filter(!is.na(building))
+
+# Government buildings
+govt_buildings <- wh_features %>%
+  filter(building == "government" | building == "public" | office == "government")
+
+# Green spaces
+greens <- wh_features %>%
+  filter(landuse == "grass" | !is.na(landuse))
+
+# Creating static map
+ggplot() +
+  # Base layer: all buildings (light tan)
+  geom_sf(data = all_buildings, 
+          fill = "#D2B48C", color = "#8B7355") +
+  # Green spaces layer (green)
+  geom_sf(data = greens, 
+          fill = "#90EE90", color = "#228B22") +
+  # Government buildings (red)
+  geom_sf(data = govt_buildings, 
+          fill = "#DC143C", color = "#8B0000") +
+  coord_sf() +
+  theme_tufte()
+										</pre></code>
+
+										<div>
+											<div class="box alt">
+												<div class="row gtr-uniform">
+													<div class="col-12">
+														<span class="image fit">
+															<img src="../../images/geospatial-data-analysis/white-house-static.png" alt="White House area static map" />
+														</span>
+													</div>
+												</div>
+												<p><em>Figure 8: Government buildings (red), regular buildings (tan) and green spaces (green)</em></p>
+											</div>
+										</div>
+
+										<h4>4(c) Interactive leaflet map</h4>
+										<p>The interactive version includes popups on clicking, layer toggles and zoom capabilities.</p>
+
+										<div>
+											<iframe src="leaflet_map.html" 
+													width="100%" 
+													height="600px" 
+													frameborder="0" 
+													style="border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 4px;">
+											</iframe>
+										</div><br>
+
+										<blockquote>
+											<strong>Comparison:</strong> The static ggplot2+sf map works best for publications and presentations with a clear, controlled message. The interactive leaflet map is better for exploration where users can zoom, toggle layers and click buildings for details like names and addresses.
+										</blockquote>
+
+										<br>
+										<h3 class="major">Technical Achievement</h3>
+										
+										<p>Built end-to-end geospatial visualization workflows integrating multiple open data sources including U.S. election data from <em>socviz</em>, global demographic data from <em>spData</em>, county-level economic indicators and custom OpenStreetMap extracts via Overpass Turbo. Developed proficiency in the sf package for spatial data manipulation, applied coordinate reference system transformations (Web Mercator, Mollweide) and created both static ggplot maps and interactive leaflet visualizations. Gained hands-on experience with GeoJSON processing, multi-layer map composition with filtered feature sets and comparative cartographic analysis techniques including diverging and sequential color scales for effective data communication.</p>
+								</div>
+							</div>
+
+					</section>
+
+				<!-- Footer -->
+					<section id="footer">
+						<div class="inner">
+							<h2 class="major">Get in touch</h2>
+							<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+								<div>
+									<ul class="contact">
+										<li class="icon solid fa-home">
+											New Haven,<br />
+											Connecticut, USA
+										</li>
+										<li class="icon solid fa-phone">(617) 676-8927</li>
+									</ul>
+								</div>
+								<div>
+									<ul class="contact">
+										<li class="icon solid fa-envelope"><a href="mailto:tenchoe.choedhen@gmail.com">tenchoe.choedhen@gmail.com</a></li>
+										<li class="icon brands fa-linkedin"><a href="https://www.linkedin.com/in/tenzin-choedhen/">linkedin.com/in/tenzin-choedhen</a></li>
+									</ul>
+								</div>
+							</div>
+
+							<ul class="copyright">
+								<li>&copy; Tenzin Choedhen. All rights reserved.</li>
+							</ul>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../../assets/js/jquery.min.js"></script>
+			<script src="../../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
+
+	</body>
+</html>
