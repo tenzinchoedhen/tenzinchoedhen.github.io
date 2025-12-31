@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Real-Time Weather Data Pipeline</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../../assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="../../index.html">Tenzin Choedhen</a></h1>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<div class="inner">
+							<h2>Menu</h2>
+							<ul class="links">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../../about-me.html">About Me</a></li>
+								<li><a href="../../portfolio.html">Portfolio</a></li>
+							</ul>
+							<a href="#" class="close">Close</a>
+						</div>
+					</nav>
+
+				<!-- Wrapper -->
+					<section id="wrapper">
+						<header>
+							<div class="inner">
+								<h2>Real-Time Weather Data Pipeline</h2>
+								<p>Apache Airflow for orchestration, dbt for transformation, Apache Superset for visualization, Docker for containerization</p>
+								<ul class="actions">
+									<li><a href="https://github.com/tenzinchoedhen/Real-Time-Weather-Data-Pipeline" class="button small" target="_blank">GitHub Repository</a></li>
+								</ul>
+							</div>
+						</header>
+
+						<!-- Content -->
+							<div class="wrapper">
+								<div class="inner">
+
+									<h3 class="major">Introduction</h3>
+									<p>This project implements a fully automated real-time weather data pipeline that fetches, transforms and visualizes weather conditions for New York City every 5 minutes. Built using modern data engineering tools and containerized with Docker, the pipeline demonstrates end-to-end data engineering capabilities from API extraction to interactive dashboards. </p>
+									<h4>Tools and Technologies</h4>
+									<ul>
+										<li><strong>Data Sources: </strong>Weatherstack API</li>
+										<li><strong>Orchestration: </strong>Apache Airflow 3.0 for workflow automation and scheduling</li>
+										<li><strong>Database: </strong>PostgreSQL 14 for data storage</li>
+										<li><strong>Transformation: </strong>dbt 1.9 for SQL-based data modeling and transformation</li>
+										<li><strong>Visualization: </strong>Apache Superset 3.0 for interactive dashboards</li>
+										<li><strong>Containerization: </strong>Docker & Docker Compose for environment consistency</li>
+										<li><strong>Update Frequency: </strong>5-minute intervals for both data collection and dashboard refresh</li>
+									</ul>
+									<br>
+									
+									<h3 class="major">Architecture Overview</h3>
+									<div>
+										<div class="box alt">
+											<div class="row gtr-uniform">
+												<div class="col-12">
+													<span class="image fit">
+														<img src="../../images/weather-data-pipeline/architecture.png" alt="Architecture" />
+													</span>
+												</div>
+											</div>
+											<p><em>Figure 1: Architecture Diagram of the Data Pipeline</em></p>
+										</div>
+									</div>
+									<p>The pipeline follows a modern ELT (Extract, Load, Transform) architecture with a layered data warehouse approach:</p>
+									<ol>
+										<li><strong>Extract: </strong>Python scripts fetch real-time weather data from Weatherstack API every 5 minutes</li>
+										<li><strong>Load: </strong>Raw data is stored in the <em>raw_weather_data</em> table in PostgreSQL</li>
+										<li><strong>Transform: </strong>dbt models process the data through multiple layers:</li>
+										<ul>
+											<li><strong>Staging Layer: </strong><em>stg_weather_data</em> - cleaned and standardized data</li>
+											<li><strong>Mart Layer: </strong>
+												<ul>
+													<li><em>weather_report</em> - comprehensive weather metrics</li>
+													<li><em>daily_average</em> - aggregated daily statistics</li>
+												</ul>
+											</li>
+										</ul>
+										<li><strong>Report: </strong>Apache Superset queries the mart tables for fast visualization with 5-minute auto-refresh</li>
+										<li><strong>Orchestrate: </strong>Apache Airflow schedules and automates the entire pipeline</li>
+										<li><strong>Containerize: </strong>Docker ensures consistent deployment across environments</li>
+									</ol>
+									<br>
+
+									<h3 class="major">Dashbaord</h3>
+									<div>
+										<div class="box alt">
+											<div class="row gtr-uniform">
+												<div class="col-12">
+													<span class="image fit">
+														<img src="../../images/weather-data-pipeline/dashboard.png" alt="Dashboard" />
+													</span>
+												</div>
+											</div>
+											<p><em>Figure 2: Apache Superset Weather Dashbaord</em></p>
+										</div>
+									</div>
+									<br>
+
+									<h3 class="major">Key Insights</h3>
+									<h4>1. Pipeline Reliability at Scale</h4>
+									<p>Running at 5-minute intervals generates 288 data points daily (12 per hour × 24 hours). Over a month, this produces ~8,640 records, demonstrating the pipeline's capability to handle high-frequency data ingestion without performance degradation. Airflow's task monitoring showed 99%+ success rate with automatic retries handling transient API failures.</p>
+									<h4>2. Staging Layer Value</h4>
+									<p>The <em>stg_weather_data</em> staging layer proved essential for data quality. Approximately 2-3% of raw API responses contained null values or inconsistent formatting. The staging transformation catches these issues before they propagate to mart tables, ensuring dashboard accuracy.</p>
+									<h4>3. Incremental vs Full Refresh Performance</h4>
+									<p>Initial dbt models used full table refreshes, causing 8-12 second transformation times. Switching to incremental models reduced this to 1-2 seconds by processing only new records, critical for maintaining 5-minute SLAs as historical data grows.</p>
+									<h4>4. Containerization Benefits</h4>
+									<p>Docker containerization enabled seamless deployment across development and production environments. The entire stack (5 services: PostgreSQL, Airflow, dbt, Superset, Redis) starts with a single <em>docker-compose up</em> command, eliminating dependency conflicts and reducing setup time from hours to minutes.</p>
+									<br>
+									
+									<h3 class="major">Technical Achievement</h3>
+									<p>Through this project, I expanded my data engineering knowledge across multiple domains including API integration (learning to implement Weatherstack authentication, error handling and rate limit management), workflow orchestration (gaining hands-on experience with Airflow DAG design using PythonOperator and DockerOperator with 5-minute scheduling intervals), data modeling (developing understanding of layered data warehouse architecture with raw -> staging -> mart layers using dbt), database management (improving skills in PostgreSQL configuration with schemas and connection pooling), real-time visualization (learning to build interactive Superset dashboards with auto-refresh), containerization (deepening knowledge of multi-container Docker Compose applications with proper networking and volume management) and DevOps best practices (strengthening abilities in environment variable management, .gitignore security patterns, version control workflows and technical documentation with architecture diagrams). </p>
+								</div>
+							</div>
+
+					</section>
+
+				<!-- Footer -->
+					<section id="footer">
+						<div class="inner">
+							<h2 class="major">Get in touch</h2>
+							<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+								<div>
+									<ul class="contact">
+										<li class="icon solid fa-home">
+											New Haven,<br />
+											Connecticut, USA
+										</li>
+										<li class="icon solid fa-phone">(617) 676-8927</li>
+									</ul>
+								</div>
+								<div>
+									<ul class="contact">
+										<li class="icon solid fa-envelope"><a href="mailto:tenchoe.choedhen@gmail.com">tenchoe.choedhen@gmail.com</a></li>
+										<li class="icon brands fa-linkedin"><a href="https://www.linkedin.com/in/tenzin-choedhen/">linkedin.com/in/tenzin-choedhen</a></li>
+									</ul>
+								</div>
+							</div>
+
+							<ul class="copyright">
+								<li>&copy; Tenzin Choedhen. All rights reserved.</li>
+							</ul>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../../assets/js/jquery.min.js"></script>
+			<script src="../../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
+
+	</body>
+</html>
